@@ -27,12 +27,12 @@ services:
 
 
   php:
-    image: php:5.6.40-fpm-alpine3.8
+    image: php:5.6.40-fpm
     volumes:
       - ./docker/config/php/php.ini:/usr/local/etc/php/php.ini
-      - ./docker/config/php/php-fpm.conf:/usr/local/etc/php-fpm.conf
-      - ./docker/config/php/ext-xdebug.ini:/usr/local/etc/php/conf.d/ext-xdebug.ini
-      - ./docker/volumes/php-fpm/logs:/var/log/php-fpm
+      #- ./docker/config/php/php-fpm.conf:/usr/local/etc/php-fpm.conf
+      #- ./docker/config/php/ext-xdebug.ini:/usr/local/etc/php/conf.d/ext-xdebug.ini
+      - ./docker/volumes/php-fpm/logs:/var/log/
     volumes_from:
       - appdata
     env_file: .env
@@ -48,7 +48,9 @@ services:
   appdata:
     image: alpine:latest
     volumes:
+      - ./docker/config/appdata/startup.sh:/startup.sh
       - .:/var/www/html
+    command: /bin/sh /startup.sh
 
   mysql:
     image: mysql:${MYSQL_VERSION}

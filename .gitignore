@@ -1,0 +1,3 @@
+docker/volumes/nginx/logs
+docker/volumes/mysql/
+docker/volumes/php-fpm/
